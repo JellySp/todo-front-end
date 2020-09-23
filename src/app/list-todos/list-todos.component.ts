@@ -31,12 +31,21 @@ export class ListTodosComponent implements OnInit {
   constructor(private todoService: TodoDataService) { }
 
   ngOnInit(): void {
+    // this.todoService.retrieveAllTodos('Jelly').subscribe(
+    //   response =>
+    //   {console.log(response);
+    //    this.todos = response;
+    // });
+    this.refreshTodos();
+  }
+
+  // tslint:disable-next-line:typedef
+  refreshTodos() {
     this.todoService.retrieveAllTodos('Jelly').subscribe(
       response =>
       {console.log(response);
-       this.todos = response;
-    });
-
+        this.todos = response;
+      });
   }
 
   // tslint:disable-next-line:typedef
@@ -45,6 +54,7 @@ export class ListTodosComponent implements OnInit {
   this.todoService.deleteTodo('Jelly', id).subscribe(response => {
     console.log(response);
     this.message = `Todo with id ${id} successfully deleted!`;
+    this.refreshTodos();
 
   });
   }
