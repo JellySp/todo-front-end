@@ -1,11 +1,14 @@
 /*Footer specific css file*/
 
-.footer {
-  position: absolute;
+.myfooter {
   bottom: 0;
   width:  100%;
   height: 40px;
   background-color: beige;
   text-align: center;
   font-family: sans-serif;
+  position: sticky;
+  line-height: 40px;
 }
+
+
