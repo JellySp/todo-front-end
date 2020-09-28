@@ -6,4 +6,13 @@ h1 {
   margin-bottom: 20px;
 }
 
+#myFooter {
+  display: inline-block;
+  width:  100%;
+  height: 30px;
+  background-color: beige;
+  text-align: center;
+  font-family: sans-serif;
+  line-height: 15px;
+}
 
