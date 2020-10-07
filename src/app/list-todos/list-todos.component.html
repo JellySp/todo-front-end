@@ -7,11 +7,12 @@
 
     <thead>
     <tr>
-      <th>id</th>
-      <th>description</th>
-      <th>is done?</th>
-      <th>deadline</th>
-      <th>action</th>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Done</th>
+      <th>Deadline</th>
+      <th>Update</th>
+      <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
       <td>{{todo.description}}</td>
       <td>{{todo.done}}</td>
       <td>{{todo.targetDate | date}}</td> <!--A pipe: formats date to be simpler -->
+      <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button> </td>
       <td><button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button> </td>
     </tr>
 

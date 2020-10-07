@@ -44,7 +44,7 @@ export class ListTodosComponent implements OnInit {
     this.todoService.retrieveAllTodos('Jelly').subscribe(
       response =>
       {console.log(response);
-        this.todos = response;
+       this.todos = response;
       });
   }
 
@@ -57,6 +57,13 @@ export class ListTodosComponent implements OnInit {
     this.refreshTodos();
 
   });
+  }
+
+  // tslint:disable-next-line:typedef
+  updateTodo(id) {
+    console.log(`update TODO: ${id}`);
+
+
   }
 
 
