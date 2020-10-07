@@ -7,6 +7,7 @@ import {ListTodosComponent} from './list-todos/list-todos.component';
 import {MenuComponent} from './menu/menu.component';
 import {LogoutComponent} from './logout/logout.component';
 import {RouteGuardService} from './service/route-guard.service';
+import {TodoComponent} from "./todo/todo.component";
 
 const routes: Routes = [
   // welcome
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'welcome/:name', component: WelcomeComponent, canActivate: [RouteGuardService]}, // canActivate takes an array of services
   { path: 'todos', component: ListTodosComponent, canActivate: [RouteGuardService]},
   { path: 'logout', component: LogoutComponent},
+  { path: 'todos/:id', component: TodoComponent, canActivate: [RouteGuardService]} ,
   { path: '**', component: ErrorComponent} // ** for anything else. NB! This has to be the last route
 
 ];
