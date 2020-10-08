@@ -50,6 +50,7 @@ export class ListTodosComponent implements OnInit {
       {console.log(response);
        this.todos = response;
       });
+
   }
 
   // tslint:disable-next-line:typedef
@@ -69,6 +70,11 @@ export class ListTodosComponent implements OnInit {
     this.router.navigate(['todos', id]);
 
 
+  }
+
+  // tslint:disable-next-line:typedef
+  addTodo() {
+    this.router.navigate(['todos', -1]);
   }
 
 

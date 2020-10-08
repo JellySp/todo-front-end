@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TodoDataService} from '../service/data/todo-data.service';
 import {Todo} from '../list-todos/list-todos.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-todo',
@@ -14,19 +14,34 @@ export class TodoComponent implements OnInit {
 
   constructor(
     private todoService: TodoDataService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    this.todo = new Todo(1, '', false, new Date());
-    // here because subscribe is asynchronous and chrome throws an error because of Todo being null for some time
+    console.log('this.id = ' + this.id);
+    this.todo = new Todo(this.id, '', false, new Date());
+    // here because subscribe is asynchronous and chrome throws an error because of odo being null for some time
+    console.log('this todo = null? ' + this.todo === null);
 
-    this.todoService.retrieveTodo('Jelly', this.id ).subscribe(data => this.todo = data );
+    // tslint:disable-next-line:triple-equals
+    if (this.id != -1) {
+      this.todoService.retrieveTodo('Jelly', this.id).subscribe(data => this.todo = data);
+      console.log('bananas?');
+    }
   }
 
   // tslint:disable-next-line:typedef
   saveTodo() {
-
+    // tslint:disable-next-line:triple-equals
+    if (this.id === -1) {
+      // create todo
+      this.todoService.createTodo('Jelly', this.todo).subscribe(data => console.log(data));
+    } else {
+      this.todoService.updateTodo('Jelly', this.id, this.todo).subscribe(data => console.log(data));
+      this.router.navigate(['todos']);
+    }
   }
 }
