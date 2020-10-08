@@ -1,6 +1,7 @@
 <h1>Todo</h1>
 <div class="container">
 
+
 <!--  #todoForm is a template variable. here we use this to check validity -->
   <form (ngSubmit)="!todoForm.invalid && saveTodo()" #todoForm="ngForm">
   <fieldset class="form-group">
@@ -16,7 +17,10 @@
          class="form-control" name="targetDate" required="required">
     <!-- I have no clue what the (ngModelChange) line does but it works. -->
   </fieldset>
-
-  <button type="submit" class="btn btn-success">Save</button>
+    <div class="alert alert-dark" *ngIf="todoForm.invalid">
+      Please fill out all fields!
+    </div>
+  <button type="submit" class="btn btn-dark">Save</button>
   </form>
+
 </div>
