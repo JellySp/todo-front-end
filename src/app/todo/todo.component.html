@@ -7,8 +7,12 @@
 
   <fieldset class="form-group">
   <label>Target date</label>
-  <input type="date" [(ngModel)]="todo.targetDate" class="form-control" name="targetDate" required="required">
+  <input type="date"
+         [ngModel]="todo.targetDate | date: 'yyyy-MM-dd' "
+         (ngModelChange)="todo.targetDate = $event"
+         class="form-control" name="targetDate" required="required">
+    <!-- I have no clue what the (ngModelChange) line does but it works. -->
   </fieldset>
 
-  <button class="btn btn-success" (click)="saveTodo()">Save</button>>
+  <button class="btn btn-success" (click)="saveTodo()">Save</button>
 </div>

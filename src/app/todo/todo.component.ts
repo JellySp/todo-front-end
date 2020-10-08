@@ -19,6 +19,9 @@ export class TodoComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
+    this.todo = new Todo(1, '', false, new Date());
+    // here because subscribe is asynchronous and chrome throws an error because of Todo being null for some time
+
     this.todoService.retrieveTodo('Jelly', this.id ).subscribe(data => this.todo = data );
   }
 
