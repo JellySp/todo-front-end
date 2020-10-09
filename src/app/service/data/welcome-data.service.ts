@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 // enables the console.log(response.message) in welcome.component.ts to work properly
 export class HelloWorldBean {
@@ -28,8 +28,22 @@ export class WelcomeDataService {
     console.log('execute helloWorldWithPathVariable');
     // <HelloWorldBean> defines the structure of the message
 
+    const basicAuthHeaderString = this.createBasicAuthenticationHttpHeader();
+    const headers = new HttpHeaders({
+      Authorization: basicAuthHeaderString
+    });
     // ${} only works if the url is quoted with ticks ``
-    return this.http.get<HelloWorldBean>(`http://localhost:8080/hello-world/path-variable/${name}`);
+    return this.http.get<HelloWorldBean>(`http://localhost:8080/hello-world/path-variable/${name}`, {headers});
 
+  }
+
+  // tslint:disable-next-line:typedef
+  createBasicAuthenticationHttpHeader() {
+    const username = 'Jelly';
+    const password = 'Jelly';
+
+    // base 64 encoding
+    const basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password);
+    return basicAuthHeaderString;
   }
 }
