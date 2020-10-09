@@ -21,15 +21,14 @@ export class TodoComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    console.log('this.id = ' + this.id);
     this.todo = new Todo(this.id, '', false, new Date());
     // here because subscribe is asynchronous and chrome throws an error because of odo being null for some time
-    console.log('this todo = null? ' + this.todo === null);
+    console.log('Keeks: ' + this.id);
 
     // tslint:disable-next-line:triple-equals
     if (this.id != -1) {
       this.todoService.retrieveTodo('Jelly', this.id).subscribe(data => this.todo = data);
-      console.log('bananas?');
+      console.log('Rosinakeeks: ' + this.id);
     }
   }
 
