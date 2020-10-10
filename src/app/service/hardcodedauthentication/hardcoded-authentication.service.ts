@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {AUTHENTICATION_TOKEN} from "../../app.constants";
 
 @Injectable({
   // @Injectable makes it a service
@@ -25,7 +26,7 @@ export class HardcodedAuthenticationService {
 
   isUserLoggedIn(): boolean {
     // console.log('User logged on: ' + sessionStorage.getItem('authenticateUser'));
-    if (sessionStorage.getItem('authenticateUser') === 'Jelly') {
+    if (sessionStorage.getItem(AUTHENTICATION_TOKEN) === 'Jelly') {
       return true;
     } else {
       return false;
@@ -33,6 +34,6 @@ export class HardcodedAuthenticationService {
   }
 
   logout(): void {
-    sessionStorage.removeItem('authenticateUser');
+    sessionStorage.removeItem(AUTHENTICATION_TOKEN);
 }
 }
