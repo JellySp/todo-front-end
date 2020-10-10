@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HardcodedAuthenticationService} from '../service/hardcodedauthentication/hardcoded-authentication.service';
-import {BasicAuthenticationService} from "../service/basicauthentication/basic-authentication.service";
+import {BasicAuthenticationService} from '../service/basicauthentication/basic-authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,12 +7,15 @@ import {BasicAuthenticationService} from "../service/basicauthentication/basic-a
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  //isUserLoggedIn = false;
 
   constructor(public basicAuthenticationService: BasicAuthenticationService) { }
-
+  username: string;
   ngOnInit(): void {
-   // this.isUserLoggedIn = this.hardCodedAuthenticationService.isUserLoggedIn();
+
   }
 
+  // tslint:disable-next-line:typedef
+  setUserName() {
+    this.username = this.basicAuthenticationService.getAuthenticatedUser();
+  }
 }

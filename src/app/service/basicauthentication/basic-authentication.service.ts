@@ -68,7 +68,7 @@ export class BasicAuthenticationService {
 
   isUserLoggedIn(): boolean {
     // console.log('User logged on: ' + sessionStorage.getItem('authenticateUser'));
-    if (sessionStorage.getItem(AUTHENTICATED_USER) === 'Jelly') {
+    if (sessionStorage.getItem(AUTHENTICATED_USER)) {
       return true;
     } else {
       return false;

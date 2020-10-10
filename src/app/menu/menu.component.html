@@ -2,7 +2,7 @@
   <nav class="navbar-expand-md navbar-dark bg-dark">
 
     <ul class="navbar-nav">
-      <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" routerLink="/welcome/Jelly" class="nav-link">Home</a></li>
+      <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" (click)="setUserName()" routerLink="/welcome/{{username}}" class="nav-link">Home</a></li>
       <li><a *ngIf="basicAuthenticationService.isUserLoggedIn()" routerLink="/todos" class="nav-link">Todos</a></li>
 
       <ul class="navbar-nav navbar-collapse justify-content-end">

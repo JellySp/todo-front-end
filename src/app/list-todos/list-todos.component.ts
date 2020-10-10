@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {TodoDataService} from '../service/data/todo-data.service';
 import {Router} from '@angular/router';
+import {BasicAuthenticationService} from '../service/basicauthentication/basic-authentication.service';
+import {delay} from "rxjs/operators";
 
 export class Todo {
   constructor(
@@ -21,6 +23,7 @@ export class ListTodosComponent implements OnInit {
 
   todos: Todo[];
   message: string;
+  username: string;
   //   [
   //   new Todo(1, 'Learn Angular', false, new Date()),
   //   new Todo(2, 'Master Angular', false, new Date()),
@@ -31,24 +34,22 @@ export class ListTodosComponent implements OnInit {
 
   constructor(
     private todoService: TodoDataService,
-    private router: Router
+    private router: Router,
+    private basicAuthenticationService: BasicAuthenticationService
 ) { }
 
   ngOnInit(): void {
-    // this.todoService.retrieveAllTodos('Jelly').subscribe(
-    //   response =>
-    //   {console.log(response);
-    //    this.todos = response;
-    // });
+
     this.refreshTodos();
   }
 
   // tslint:disable-next-line:typedef
   refreshTodos() {
-    this.todoService.retrieveAllTodos('Jelly').subscribe(
-      response =>
-      {console.log(response);
-       this.todos = response;
+    console.log(this.basicAuthenticationService.getAuthenticatedUser() + ' likes bananas');
+    this.todoService.retrieveAllTodos(this.basicAuthenticationService.getAuthenticatedUser()).subscribe(
+      response => {
+        console.log(response);
+        this.todos = response;
       });
 
   }
@@ -56,7 +57,7 @@ export class ListTodosComponent implements OnInit {
   // tslint:disable-next-line:typedef
   deleteTodo(id) {
   console.log(`delete TODO: ${id}`);
-  this.todoService.deleteTodo('Jelly', id).subscribe(response => {
+  this.todoService.deleteTodo(this.basicAuthenticationService.getAuthenticatedUser(), id).subscribe(response => {
     console.log(response);
     this.message = `Todo with id ${id} successfully deleted!`;
     this.refreshTodos();
