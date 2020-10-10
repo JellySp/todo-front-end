@@ -14,6 +14,24 @@ export class BasicAuthenticationService {
   }
 
   // tslint:disable-next-line:typedef
+  executeJWTAuthenticationService(username, password) {
+    console.log('execute executeJWTAuthenticationService @BasicAuthenticationService');
+
+    // ${} only works if the url is quoted with ticks ``
+    return this.http.post<any>(`${API_URL}/authenticate`, {username, password})
+      .pipe(  // pipe allows us to decide what we should do if the request succeeds
+        map(
+          data => { // if auth succeeds, store user in the sessionstorage
+            sessionStorage.setItem(AUTHENTICATED_USER, username);
+            sessionStorage.setItem(AUTHENTICATION_TOKEN, `Bearer ${data.token}`);
+            return data;
+          }
+        )
+      );
+
+  }
+
+  // tslint:disable-next-line:typedef
   executeAuthenticationService(username, password) {
     console.log('execute executeAuthenticationService @BasicAuthenticationService');
 
