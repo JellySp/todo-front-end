@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {HelloWorldBean} from '../data/welcome-data.service';
+import {map} from 'rxjs/operators';
+import {API_URL, AUTHENTICATED_USER, AUTHENTICATION_TOKEN} from '../../app.constants';
 
 @Injectable({
   // @Injectable makes it a service
@@ -9,20 +10,7 @@ import {HelloWorldBean} from '../data/welcome-data.service';
 })
 export class BasicAuthenticationService {
 
-  constructor(private http: HttpClient ) { }
-
-  authenticate(username, password): boolean {
-    // console.log('before ' + this.isUserLoggedIn());
-    if (username === 'Jelly' && password === 'Jelly') {
-      sessionStorage.setItem('authenticateUser', username);
-      // console.log('after ' + this.isUserLoggedIn());
-      return true;
-    } else {
-      sessionStorage.setItem('authenticateUser', 'invalidUser');
-      // console.log('Should be false: ' + this.isUserLoggedIn());
-
-      return false;
-    }
+  constructor(private http: HttpClient) {
   }
 
   // tslint:disable-next-line:typedef
@@ -31,28 +19,48 @@ export class BasicAuthenticationService {
 
 
     const basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password);
-    return basicAuthHeaderString;
-
     const headers = new HttpHeaders({
       Authorization: basicAuthHeaderString
     });
     // ${} only works if the url is quoted with ticks ``
-    return this.http.get<AuthenticationBean>(`http://localhost:8080/basicauth`, {headers});
+    return this.http.get<AuthenticationBean>(`${API_URL}/basicauth`, {headers})
+      .pipe(  // pipe allows us to decide what we should do if the request succeeds
+        map(
+          data => { // if auth succeeds, store user in the sessionstorage
+            sessionStorage.setItem(AUTHENTICATED_USER, username);
+            sessionStorage.setItem(AUTHENTICATION_TOKEN, basicAuthHeaderString);
+            return data;
+          }
+        )
+      );
 
   }
 
+  // tslint:disable-next-line:typedef
+  getAuthenticatedUser() {
+    return sessionStorage.getItem(AUTHENTICATED_USER);
+  }
+
+  // tslint:disable-next-line:typedef
+  getAuthenticationtoken() {
+    if (this.getAuthenticatedUser()) {
+      return sessionStorage.getItem(AUTHENTICATION_TOKEN);
+    }
+  }
 
   isUserLoggedIn(): boolean {
     // console.log('User logged on: ' + sessionStorage.getItem('authenticateUser'));
-    if (sessionStorage.getItem('authenticateUser') === 'Jelly') {
+    if (sessionStorage.getItem(AUTHENTICATED_USER) === 'Jelly') {
       return true;
     } else {
       return false;
     }
   }
 
-  logout(): void {
-    sessionStorage.removeItem('authenticateUser');
+  // tslint:disable-next-line:typedef
+  logout() {
+    sessionStorage.removeItem(AUTHENTICATED_USER);
+    sessionStorage.removeItem(AUTHENTICATION_TOKEN);
   }
 }
 
