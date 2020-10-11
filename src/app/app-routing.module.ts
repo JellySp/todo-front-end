@@ -4,10 +4,10 @@ import {LoginComponent} from './login/login.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {ErrorComponent} from './error/error.component';
 import {ListTodosComponent} from './list-todos/list-todos.component';
-import {MenuComponent} from './menu/menu.component';
 import {LogoutComponent} from './logout/logout.component';
 import {RouteGuardService} from './service/routeguard/route-guard.service';
-import {TodoComponent} from "./todo/todo.component";
+import {TodoComponent} from './todo/todo.component';
+import {UserCreationComponent} from './user-creation/user-creation.component';
 
 const routes: Routes = [
   // welcome
@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'todos', component: ListTodosComponent, canActivate: [RouteGuardService]},
   { path: 'logout', component: LogoutComponent},
   { path: 'todos/:id', component: TodoComponent, canActivate: [RouteGuardService]} ,
+  { path: 'newuser', component: UserCreationComponent },
   { path: '**', component: ErrorComponent} // ** for anything else. NB! This has to be the last route
 
 ];

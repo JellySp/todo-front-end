@@ -1,0 +1,42 @@
+<h1>New user</h1>
+<div class="container">
+
+
+  <!--  #todoForm is a template variable. here we use this to check validity -->
+  <form (ngSubmit)="!newUserForm.invalid && createUser() && comparePassword() &&
+  !isUserNameTaken()" #newUserForm="ngForm">
+    <fieldset class="form-group">
+      <label>Username</label>
+      <input type="text"  [(ngModel)]="username"  class="form-control" name="description" required="required">
+    </fieldset>
+
+    <div class="text-danger" *ngIf="isUserNameTaken()">
+      Username already taken!
+    </div>
+
+    <fieldset class="form-group">
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password" class="form-control" name="password" required="required">
+
+    </fieldset>
+
+    <fieldset class="form-group">
+      <label>Confirm password</label>
+      <input type="password"  [(ngModel)]="confirmPassword" class="form-control" name="confirmPassword" required="required">
+
+    </fieldset>
+
+    <div class="text-danger" *ngIf="!comparePassword()">
+      Passwords must match!
+    </div>
+    <div class="alert alert-dark" *ngIf="newUserForm.invalid">
+      Please fill out all fields!
+    </div>
+    <button type="submit" class="btn btn-dark">Save</button>
+  </form>
+
+</div>
+
+
+
+
